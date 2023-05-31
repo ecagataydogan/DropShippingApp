@@ -1,3 +1,5 @@
+package DropShipping;
+
 public class Sales {
     private String id;
     private Customer customer;
@@ -5,23 +7,18 @@ public class Sales {
     private String salesDate;
     private double salesPrice;
 
-    public Sales() {
-        this("empty",null,null,"empty");
-    }
-
+    //Constructors
     public Sales(String id, Customer customer, Product product, String salesDate) {
         this.id = id;
         this.customer = customer;
         this.product = product;
         this.salesDate = salesDate;
-        this.salesPrice = calculateSalesPrice();
+        this.salesPrice = calculateSalesPrice(); // calculates sales price
     }
 
-    //product.getPrice() + (product.getRate()*20.0) * product.getNumberOfReviews();
-    private  double calculateSalesPrice() {
-        return this.product.getPrice() + (this.product.getRate() * 20.0) * this.product.getNumberOfReviews();
+    public Sales() {
+        this("empty",null,null,"empty");
     }
-
 
     public String getId() {
         return id;
@@ -63,6 +60,12 @@ public class Sales {
         this.salesPrice = salesPrice;
     }
 
+    //Method calculates sales price of product and returns it
+    private  double calculateSalesPrice() {
+        return this.product.getPrice() + (this.product.getRate() * 20.0) * this.product.getNumberOfReviews();
+    }
+
+    //Method calculates profit of product and returns
     public double calculateProfit() {
         return this.salesPrice - this.product.getPrice();
     }

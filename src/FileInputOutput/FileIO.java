@@ -1,11 +1,18 @@
+package FileInputOutput;
+
+import DropShipping.Customer;
+import DropShipping.Product;
+import DropShipping.Sales;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+
 public class FileIO {
 
-    //Dosyayı okur ve bir String arrayi returnler.
-    public static String[] getData(String fileName) {
+    //It reads data from spesicif file. Returns string array.
+    private static String[] getData(String fileName) {
         Scanner scanner = null;
         int lineNumber = lineCalculator(fileName);
         String[] data = new String[lineNumber];
@@ -24,8 +31,7 @@ public class FileIO {
         return data;
     }
 
-
-    //Customerlar objelerinden oluşan bir array göndürür.
+    //Reads data from file, creates DropShipping.Customer objects and returns DropShipping.Customer array (all customers)
     public static Customer[]  getAllCustomer(String fileName) {
         String[] data = getData(fileName);
         Customer[] allCustomers = new Customer[data.length];
@@ -43,11 +49,10 @@ public class FileIO {
         return allCustomers;
     }
 
-
+    //Reads data from file, creates product objects and returns DropShipping.Product array (Specific supplier)
     public static Product[]  getProductsFromSupplier(String fileName) {
         String[] data = getData(fileName);
         Product[] products = new Product[data.length];
-        //ID,Title,Rate,NumberOfReviews,Price
         int index = 0;
         for (String productStr : data) {
             String[] productArr = productStr.split(",");
@@ -62,33 +67,29 @@ public class FileIO {
         return products;
     }
 
-
-    public static Sales[] getSalesFromSuppliers(String salesFileName,String customersFileName, String productsFileName) {
+    //Reads data from files, create sales, returns DropShipping.Sales array (Specific sales ie.s1,s2,s3)
+    public static Sales[] getSalesFromSuppliers(String salesFileName, String customersFileName, String productsFileName) {
         String[] data = getData(salesFileName);
-        Sales[] sales = new Sales [data.length];
-//        System.out.println(data.length);
+        Sales[] sales = new Sales[data.length];
         int index = 0;
         for (String salesStr : data) {
             String[] salesArr = salesStr.split(",");
-//            System.out.println(Arrays.toString(salesArr));
             String id = salesArr[0];
             String customerId = salesArr[1];
-//            System.out.println(customerId);
             Customer customerObject = getCustomerById(customersFileName,customerId);
-
             String productId = salesArr[2];
             Product productObject = getProductById(productsFileName,productId);
             String salesDate = salesArr[3];
-
             sales[index] = new Sales(id,customerObject,productObject,salesDate);
             index++;
-
         }
         return sales;
 
     }
 
-    private static Product getProductById(String productsFileName,String productId) {
+    //HELPER METHODS
+
+    private static Product getProductById(String productsFileName, String productId) {
         Product[] allProducts = getProductsFromSupplier(productsFileName);
         for(Product product : allProducts) {
             if(product.getId().equals(productId)) {
@@ -104,17 +105,11 @@ public class FileIO {
             if(customer.getId().equals(customerId)) {
                 return customer;
             }
-
         }
         return null;
     }
 
-
-
-
-
-
-    //Line sayısını hesaplar
+    //Calculates line number
     private static int lineCalculator(String fileName) {
         int lineNumber = 0;
         Scanner scanner = null;

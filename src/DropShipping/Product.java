@@ -1,3 +1,5 @@
+package DropShipping;
+
 public class Product {
     private String id;
     private String title;
@@ -5,10 +7,7 @@ public class Product {
     private double numberOfReviews;
     private double price;
 
-    public Product() {
-        this("empty","empty",0d,0d,0d);
-    }
-
+    //Constructors
     public Product(String id, String title, double rate, double numberOfReviews, double price) {
         this.id = id;
         this.title = title;
@@ -17,6 +16,11 @@ public class Product {
         this.price = price;
     }
 
+    public Product() {
+        this("empty","empty",0d,0d,0d);
+    }
+
+    //Getters and Setters
     public String getId() {
         return id;
     }
