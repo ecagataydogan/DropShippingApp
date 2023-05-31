@@ -3,5 +3,7 @@ public class DropShippingApp {
         SalesQuery sq = new SalesQuery();
         sq.mostProfitableProduct();
         sq.mostExpensiveProduct();
+        System.out.println("commit");
+        //Some other methods will be implemented
     }
 }
